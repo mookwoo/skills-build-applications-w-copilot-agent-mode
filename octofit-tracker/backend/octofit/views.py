@@ -31,10 +31,11 @@ def api_root(request, format=None):
     base_url = 'https://shiny-funicular-8000.app.github.dev/'
     if settings.DEBUG:
         base_url = 'http://localhost:8000/'
+    base_url += 'api/'
     return Response({
-        'users': base_url + 'api/users/?format=api',
-        'teams': base_url + 'api/teams/?format=api',
-        'activities': base_url + 'api/activities/?format=api',
-        'leaderboard': base_url + 'api/leaderboard/?format=api',
-        'workouts': base_url + 'api/workouts/?format=api'
+        'users': base_url + 'users/?format=api',
+        'teams': base_url + 'teams/?format=api',
+        'activities': base_url + 'activities/?format=api',
+        'leaderboard': base_url + 'leaderboard/?format=api',
+        'workouts': base_url + 'workouts/?format=api'
     })
