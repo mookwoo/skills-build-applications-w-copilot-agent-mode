@@ -26,6 +26,7 @@ SECRET_KEY = "django-insecure-b*3j11d0m%w30vs0dkzec7)(rt=o--z_ts((kdmq%61td=v!a&
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS += ['[shiny funicular]-8000.app.github.dev', 'localhost']
 
 
 # Application definition
