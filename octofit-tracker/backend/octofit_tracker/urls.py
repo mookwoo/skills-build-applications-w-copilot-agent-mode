@@ -16,8 +16,13 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from octofit.views import api_root
+from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path('', api_root, name='api-root'),
+    path('admin/', admin.site.urls),
+    path('api/', include('octofit.urls')),
+    path('docs/', include_docs_urls(title='OctoFit API')),
 ]
