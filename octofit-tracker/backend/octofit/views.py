@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from rest_framework import viewsets
-from rest_framework.decorators import api_view
+from rest_framework import viewsets, status
+from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
+from rest_framework.reverse import reverse
 from django.conf import settings
 from .serializers import UserSerializer, TeamSerializer, ActivitySerializer, LeaderboardSerializer, WorkoutSerializer
 from .models import User, Team, Activity, Leaderboard, Workout
@@ -28,14 +29,20 @@ class WorkoutViewSet(viewsets.ModelViewSet):
 
 @api_view(['GET'])
 def api_root(request, format=None):
-    base_url = 'https://shiny-funicular-8000.app.github.dev/'
+    # Get the codespace URL or use localhost in debug mode
+    codespace_url = 'https://shiny-funicular-8000.app.github.dev/'
     if settings.DEBUG:
-        base_url = 'http://localhost:8000/'
-    base_url += 'api/'
+        base_url = request.build_absolute_uri('/')[:-1]  # Dynamically get the base URL
+    else:
+        base_url = codespace_url
+    
+    # Add the API endpoint suffix
+    api_url = f"{base_url}/api"
+    
     return Response({
-        'users': base_url + 'users/?format=api',
-        'teams': base_url + 'teams/?format=api',
-        'activities': base_url + 'activities/?format=api',
-        'leaderboard': base_url + 'leaderboard/?format=api',
-        'workouts': base_url + 'workouts/?format=api'
+        'users': f"{api_url}/users/",
+        'teams': f"{api_url}/teams/",
+        'activities': f"{api_url}/activities/",
+        'leaderboard': f"{api_url}/leaderboard/",
+        'workouts': f"{api_url}/workouts/",
     })
